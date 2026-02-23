@@ -1,71 +1,33 @@
 
-import React, { useState, useEffect } from 'react';
-import { LoginForm } from './components/LoginForm';
-import { Layout } from './components/Layout';
-import { TopUpPage } from './components/TopUpPage';
-import { AdminPanel } from './components/AdminPanel';
-import { View, AppState } from './types';
+import React, { useState } from 'react';
+import { Page, AdminDecision } from './types';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
-  const [state, setState] = useState<AppState>({
-    isLoggedIn: false,
-    user: null,
-    isAdmin: true, // For this demo, logged in = admin
-    topupSuccessful: true
-  });
+  const [currentPage, setCurrentPage] = useState<Page>('login');
+  const [adminDecision, setAdminDecision] = useState<AdminDecision>('success');
 
-  const [currentView, setCurrentView] = useState<View>(View.HOME);
-
-  // Persistence (optional, but nice for "backend stored locally" feel)
-  useEffect(() => {
-    const saved = localStorage.getItem('firegems_state');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // We only restore the topup setting for this specific request
-      setState(prev => ({ ...prev, topupSuccessful: parsed.topupSuccessful }));
-    }
-  }, []);
-
-  const handleLogin = (user: string) => {
-    setState(prev => ({ ...prev, isLoggedIn: true, user }));
+  const handleLoginSuccess = () => {
+    setCurrentPage('dashboard');
   };
 
   const handleLogout = () => {
-    setState({
-      isLoggedIn: false,
-      user: null,
-      isAdmin: false,
-      topupSuccessful: state.topupSuccessful // keep setting
-    });
-    setCurrentView(View.HOME);
+    setCurrentPage('login');
   };
-
-  const toggleSuccess = (val: boolean) => {
-    const newState = { ...state, topupSuccessful: val };
-    setState(newState);
-    localStorage.setItem('firegems_state', JSON.stringify({ topupSuccessful: val }));
-  };
-
-  if (!state.isLoggedIn) {
-    return <LoginForm onLogin={handleLogin} />;
-  }
 
   return (
-    <Layout 
-      currentView={currentView} 
-      onNavigate={setCurrentView} 
-      onLogout={handleLogout}
-    >
-      {currentView === View.HOME ? (
-        <TopUpPage systemSuccess={state.topupSuccessful} />
+    <div className="min-h-screen bg-[#0a0a0c] text-white selection:bg-orange-500 selection:text-white">
+      {currentPage === 'login' ? (
+        <Login onLoginSuccess={handleLoginSuccess} />
       ) : (
-        <AdminPanel 
-          user={state.user || 'Unknown'} 
-          systemSuccess={state.topupSuccessful} 
-          onToggle={toggleSuccess} 
+        <Dashboard 
+          adminDecision={adminDecision} 
+          setAdminDecision={setAdminDecision} 
+          onLogout={handleLogout}
         />
       )}
-    </Layout>
+    </div>
   );
 };
 

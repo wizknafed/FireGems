@@ -1,20 +1,19 @@
 
-export interface DiamondPackage {
-  id: number;
+export type Page = 'login' | 'dashboard';
+
+export type AdminDecision = 'success' | 'reject';
+
+export interface Package {
+  id: string;
   amount: string;
-  price: string;
+  label: string;
   bonus: string;
-  image: string;
+  price: string;
 }
 
-export interface AppState {
-  isLoggedIn: boolean;
-  user: string | null;
-  isAdmin: boolean;
-  topupSuccessful: boolean;
-}
-
-export enum View {
-  HOME = 'home',
-  ADMIN = 'admin'
+export interface ProcessingState {
+  status: 'idle' | 'input_uid' | 'processing' | 'result';
+  uid: string;
+  selectedPackage: Package | null;
+  error?: string;
 }

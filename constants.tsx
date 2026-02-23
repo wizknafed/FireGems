@@ -1,11 +1,14 @@
 
-import { DiamondPackage } from './types';
+import { Package } from './types';
 
-export const DIAMOND_PACKAGES: DiamondPackage[] = [
-  { id: 1, amount: '10,000', price: '', bonus: '+1,000 Bonus', image: 'https://files.catbox.moe/zag3yr.jpg' },
-  { id: 2, amount: '25,000', price: '', bonus: '+3,000 Bonus', image: 'https://files.catbox.moe/zag3yr.jpg' },
-  { id: 3, amount: '50,000', price: '', bonus: '+7,500 Bonus', image: 'https://files.catbox.moe/zag3yr.jpg' },
-  { id: 4, amount: '75,000', price: '', bonus: '+15,000 Bonus', image: 'https://files.catbox.moe/zag3yr.jpg' },
-  { id: 5, amount: '100,000', price: '', bonus: '+25,000 Bonus', image: 'https://files.catbox.moe/zag3yr.jpg' },
-  { id: 6, amount: '120,000', price: '', bonus: '+40,000 Bonus', image: 'https://files.catbox.moe/zag3yr.jpg' },
+export const PACKAGES: Package[] = [
+  { id: '10k', amount: '10,000', label: 'Starter Pack', bonus: '+500 Bonus', price: 'FREE' },
+  { id: '25k', amount: '25,000', label: 'Pro Bundle', bonus: '+2,000 Bonus', price: 'FREE' },
+  { id: '50k', amount: '50,000', label: 'Elite Crate', bonus: '+5,000 Bonus', price: 'FREE' },
+  { id: '100k', amount: '100,000', label: 'Grand Master', bonus: '+15,000 Bonus', price: 'FREE' },
 ];
+
+export const LOGIN_CREDENTIALS = {
+  user: 'admin',
+  pass: 'admin123'
+};
